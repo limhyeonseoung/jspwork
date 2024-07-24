@@ -17,7 +17,6 @@
 	int start = 0;			// board테이블의 select시 시작번호(한페이지에 필요한 만큼 게시물만 가져오려고)
 	int end = 0;			// 1page에 보여줄 레코드의 갯수(보통은 10개, 맨 마지막page는 전체레코드수에 따라 달라짐)
 	int listSize = 0;		// 현재 읽어온 게시물의 수
-	int depth = 0;
 	
 	String keyField = "", keyWord = "";
 	if(request.getParameter("keyWord") != null) {
@@ -48,7 +47,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판</title>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -58,22 +57,10 @@
 	.m50 {margin-top:50px;}
 	table {margin-top: 30px; width:800px;}
 	table th, table td {text-align:center;}
-	.a {text-decoration:none; color:black; cursor:pointer;}
-	/* 방문한 링크 스타일 */
-	a:visited {
-		color: #551A8B;           /* 방문한 링크의 색상 (보라색) */
-	}
-
-	/* 링크에 마우스를 올렸을 때의 스타일 */
-	a:hover {
-		color: #FF0000;           /* 마우스를 올렸을 때 링크의 색상 (빨간색) */
-		text-decoration: underline; /* 밑줄 추가 */
-	}
-
-	/* 클릭 중인 링크 스타일 */
-	a:active {
-		color: #FF4500;           /* 클릭 중인 링크의 색상 (오렌지색) */
-	}
+	/* .a {text-decoration:none; color:black; cursor:pointer;} */
+	a:link {text-decoration:none; color:rgb(53, 53, 53);}
+	a:hover {text-decoration:underline; color:coral; cursor:pointer;}
+	a:visited {text-decoration:none; color:black;}
 </style>
 <script>
 	function block(value) {
@@ -87,11 +74,11 @@
 		document.readFrm.submit();
 	}
 	function list() {
-		/*  document.listFrm.action = "list.jsp"; */
+		/* document.listFrm.action = "list.jsp"; */
 		document.listFrm.submit();
 	}
 	function read(num) {
-		document.readFrm.num.value = num;	
+		document.readFrm.num.value=num;
 		document.readFrm.action="read.jsp";
 		document.readFrm.submit();
 	}
@@ -118,7 +105,7 @@
 			for(int i=0; i<listSize; i++) {
 				Board board = alist.get(i);
 				String rdate = board.getRegdate().substring(0,10);
-				
+				int depth = board.getDepth();
 		%>
 			<tr>
 				<%-- <td><%=board.getNum() %></td> --%>
@@ -126,16 +113,16 @@
 					<%=totalRecord-(nowPage-1)*numPerPage - i %>
 				</td>
 				<td style="text-align:left;">
-				<%
+		<%
 					if(depth > 0) {
 						for(int j=0; j<depth; j++) {
 							out.print("&emsp;");
 						}
-						out.print("↴");
+						out.print("↳");
 					}
-				
-				%>		
-				<a href="javascript:read('<%=board.getNum() %>')" class="a"><%=board.getSubject() %></a></td>
+		%>
+					<a href="javascript:read('<%=board.getNum() %>')" class="a"><%=board.getSubject() %></a>
+				</td>
 				<td><%=board.getName() %></td>
 				<td><%=rdate %></td>
 				<td><%=board.getCount() %></td>
@@ -175,7 +162,7 @@
 			%>
 				</td>
 				<td colspan="2" style="text-align:right;">
-					<a href="" class="a">[글쓰기]</a>&emsp;
+					<a href="post.jsp" class="a">[글쓰기]</a>&emsp;
 					<a href="javascript:list();" class="a">[처음으로]</a>
 				</td>
 			</tr>
@@ -202,15 +189,13 @@
 			<input type="hidden" name="nowPage" value="1">
 		</form>
 		
-		<!-- 사용자가 만약 [2]를 누르면 2번째 페이지 보여주기 -->
+		<!-- 사용자가 만약 [2]를 누르면 2번째 페이지 보여주기와 상세보기 -->
 		<form name="readFrm">
 			<input type="hidden" name="num">
 			<input type="hidden" name="nowPage" value="<%=nowPage %>">
 			<input type="hidden" name="keyField" value="<%=keyField %>">
 			<input type="hidden" name="keyWord" value="<%=keyWord %>">
 		</form>
-		
 	</div>
-	<br><br><br><br><br><br><br>
 </body>
 </html>
