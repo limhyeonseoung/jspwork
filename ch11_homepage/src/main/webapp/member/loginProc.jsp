@@ -7,6 +7,7 @@
 	boolean result = mMgr.loginMember(id, pwd);
 	
 	String msg = "로그인에 실패하였습니다.";
+	
 	if(result) {
 		session.setAttribute("idKey", id);
 		msg = "로그인에 성공하였습니다.";
@@ -14,7 +15,7 @@
 %>
 <script type="text/javascript">
 	alert("<%=msg %>");
-	location.href = "login.jsp";
+	location.href = "../index.jsp";
 </script>
 
 <!DOCTYPE html>
