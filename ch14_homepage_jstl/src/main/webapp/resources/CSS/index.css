@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+*{
+    margin: 0 auto;
+    list-style: none;
+    
+    
+}
+body {
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+
+a {
+    padding: 0 .3em;
+    transition: all .3s;
+    text-decoration-line: none;
+    color: white;
+  
+  }
+
+a:hover {
+    color: black;
+    
+  }
+  
+.logo {
+    margin-top: 50px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+#login {
+    position: absolute;
+    top: 0px; /* 원하는 위치로 조정 가능 */
+    right: 18px; /* 원하는 위치로 조정 가능 */
+    font-size: 15px; /* 텍스트 크기 조정 가능 */
+}
+
+ul.nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    background-color: gray;
+}
+
+nav li {
+
+    text-align: center;
+    width: 33.1%;
+    border: 1px solid;
+    height: 60px;
+    font-size: 30px;
+    text-align: center;
+    line-height: 60px;
+
+}
+
+article img {
+    max-width: 100%; /* 이미지가 부모 요소를 넘지 않도록 설정 */
+    height: auto;
+    display: block; /* 이미지 아래의 여백을 없애기 위해 블록 요소로 설정 */
+}
